@@ -117,12 +117,14 @@ npm run start
 ## Project Structure
 
 ```text
-app/[locale]/       Localized App Router pages, layout, and global styles
-components/        Reusable UI and client components
-i18n/               Routing, request configuration, and navigation helpers
-messages/           Arabic and English translation files
-lib/                Shared utilities
-public/             Static assets
+app/[locale]/           Localized App Router entry points and global styles
+components/providers/   Cross-cutting client providers such as smooth scrolling
+components/ui/          Reusable UI primitives
+features/               Domain-oriented feature modules and feature components
+i18n/                   Routing, request configuration, and navigation helpers
+messages/               Arabic and English translation files
+lib/                    Shared utilities
+public/                 Static assets and README media
 ```
 
 ## Requirements Baseline
