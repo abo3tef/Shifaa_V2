@@ -8,11 +8,11 @@ export interface NavItem {
 }
 
 export const navItems: NavItem[] = [
-  { titleKey: "About Al-Shifaa", href: "/about-al-shifaa" },
-  { titleKey: "For Hospitals", href: "/for-hospitals" },
-  { titleKey: "For Doctors", href: "/for-doctors" },
-  { titleKey: "Artificial Intelligence", href: "/artificial-intelligence" },
-  { titleKey: "Features", href: "/features" },
-  { titleKey: "How It Works", href: "/how-it-works" },
-  { titleKey: "home", href: "/" },
+  { titleKey: "About Al-Shifaa", href: "#about" },
+  { titleKey: "For Hospitals", href: "#ecosystem" },
+  { titleKey: "For Doctors", href: "#ecosystem" },
+  { titleKey: "Artificial Intelligence", href: "#ai" },
+  { titleKey: "Features", href: "#features" },
+  { titleKey: "How It Works", href: "#how-it-works" },
+  { titleKey: "home", href: "#home" },
 ];

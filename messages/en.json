@@ -221,7 +221,8 @@
     "signIn": "Sign in",
     "explorePlatform": "Explore platform",
     "register": "Get started",
-    "changeLanguage": "Change website language"
+    "changeLanguage": "Change website language",
+    "switchingLanguage": "Switching website language..."
   },
   "Footer": {
     "SHIFAA": "SHIFAA",

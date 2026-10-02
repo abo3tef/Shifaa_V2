@@ -79,7 +79,10 @@ function PlatformFeture() {
   ];
 
   return (
-    <section className="w-full bg-[#151a22] px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
+    <section
+      id="features"
+      className="w-full scroll-mt-24 bg-[#151a22] px-5 py-24 sm:px-8 lg:px-12 lg:py-32"
+    >
       <div className="mx-auto max-w-6xl">
         <motion.h2
           initial={{ opacity: 0, y: 18 }}

@@ -221,7 +221,8 @@
     "signIn": "تسجيل الدخول",
     "explorePlatform": "استكشف المنصة",
     "register": "ابدأ الآن",
-    "changeLanguage": "تغيير لغة الموقع"
+    "changeLanguage": "تغيير لغة الموقع",
+    "switchingLanguage": "جارٍ تغيير لغة الموقع..."
   },
   "Footer": {
     "SHIFAA": "شفاء",

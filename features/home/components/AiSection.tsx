@@ -8,7 +8,10 @@ function AiSection() {
   const t = useTranslations("HomePage");
 
   return (
-    <section className="w-full bg-[var(--bg-color)] px-5 py-24 sm:px-8 lg:px-12 lg:py-32">
+    <section
+      id="ai"
+      className="w-full scroll-mt-24 bg-[var(--bg-color)] px-5 py-24 sm:px-8 lg:px-12 lg:py-32"
+    >
       <motion.div
         initial={{ opacity: 0, y: 26 }}
         whileInView={{ opacity: 1, y: 0 }}

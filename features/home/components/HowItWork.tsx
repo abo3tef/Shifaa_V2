@@ -59,10 +59,11 @@ function HowItWork() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[300vh] w-full bg-[#080d16]"
+      id="how-it-works"
+      className="relative h-[260vh] w-full scroll-mt-24 bg-[#080d16] md:h-[300vh]"
     >
-      <div className="sticky top-0 flex min-h-screen items-center overflow-hidden px-5 py-20 sm:px-10 lg:px-16">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+      <div className="sticky top-0 flex h-screen min-h-0 items-center overflow-hidden px-4 py-6 sm:px-10 sm:py-20 lg:px-16">
+        <div className="mx-auto grid h-full w-full max-w-6xl grid-rows-[auto_1fr] items-center gap-4 sm:gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:grid-rows-none lg:gap-20">
           <div>
             <motion.span
               initial={{ opacity: 0, y: 16 }}
@@ -74,7 +75,7 @@ function HowItWork() {
               {t("howItWorks.eyebrow")}
             </motion.span>
 
-            <div className="mt-8 border-s border-[var(--border-color)]">
+            <div className="mt-4 border-s border-[var(--border-color)] sm:mt-8">
               {steps.map((step, index) => {
                 const isActive = index === activeStep;
                 return (
@@ -82,17 +83,17 @@ function HowItWork() {
                     key={step.number}
                     animate={{ opacity: isActive ? 1 : 0.28 }}
                     transition={{ duration: 0.35 }}
-                    className={`relative border-s-2 py-5 ps-5 transition-colors duration-300 ${isActive ? "border-[var(--success)]" : "border-transparent"}`}
+                    className={`relative border-s-2 py-2 ps-4 transition-colors duration-300 sm:py-5 sm:ps-5 ${isActive ? "border-[var(--success)]" : "border-transparent"}`}
                   >
                     <span
                       className={`font-mono text-xs tracking-[0.18em] ${isActive ? "text-[var(--success-light)]" : "text-[var(--main-text-muted-color)]"}`}
                     >
                       {step.number}
                     </span>
-                    <h2 className="mt-3 text-2xl font-extrabold text-[var(--main-text-color)] sm:text-3xl">
+                    <h2 className="mt-1 text-base font-extrabold text-[var(--main-text-color)] sm:mt-3 sm:text-3xl">
                       {step.title}
                     </h2>
-                    <p className="mt-2 text-sm text-[var(--main-text-muted-color)]">
+                    <p className="mt-2 hidden text-sm text-[var(--main-text-muted-color)] sm:block">
                       {step.description}
                     </p>
                   </motion.div>
@@ -103,10 +104,10 @@ function HowItWork() {
 
           <motion.div
             layout
-            className="relative min-h-[360px] overflow-hidden rounded-[28px] border border-[var(--border-color)] bg-[#121c32] p-5 shadow-[0_28px_80px_rgba(0,0,0,0.28)] sm:min-h-[470px] sm:p-8"
+            className="relative h-full min-h-0 overflow-hidden rounded-[28px] border border-[var(--border-color)] bg-[#121c32] p-4 shadow-[0_28px_80px_rgba(0,0,0,0.28)] sm:min-h-[470px] sm:p-8 lg:h-auto"
           >
             <div className="absolute -end-20 -top-20 size-64 rounded-full bg-[var(--success)]/10 blur-[90px]" />
-            <div className="relative flex h-full min-h-[320px] flex-col justify-center gap-4 sm:min-h-[400px]">
+            <div className="relative flex h-full min-h-0 flex-col justify-center gap-4 sm:min-h-[400px]">
               <motion.div
                 key={activeStep}
                 initial={{ opacity: 0, y: 18 }}
@@ -129,10 +130,10 @@ function HowItWork() {
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--main-text-muted-color)]">
                     {t("howItWorks.previewLabel")}
                   </p>
-                  <h3 className="mt-3 text-3xl font-extrabold text-[var(--main-text-color)] sm:text-5xl">
+                  <h3 className="mt-2 text-2xl font-extrabold text-[var(--main-text-color)] sm:mt-3 sm:text-5xl">
                     {active.title}
                   </h3>
-                  <p className="mt-4 max-w-md text-base leading-7 text-[var(--dark-panel-muted)]">
+                  <p className="mt-2 max-w-md text-sm leading-6 text-[var(--dark-panel-muted)] sm:mt-4 sm:text-base sm:leading-7">
                     {active.detail}
                   </p>
                 </div>
@@ -145,7 +146,7 @@ function HowItWork() {
                   ].map((item, index) => (
                     <div
                       key={item}
-                      className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/15 px-4 py-3 text-sm font-semibold text-[var(--main-text-color)]"
+                      className="flex items-center gap-3 rounded-xl border border-white/10 bg-black/15 px-3 py-2 text-xs font-semibold text-[var(--main-text-color)] sm:px-4 sm:py-3 sm:text-sm"
                     >
                       <span
                         className={`size-2 rounded-full ${index === activeStep ? "bg-[var(--success)]" : "bg-[#4b5563]"}`}

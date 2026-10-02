@@ -12,7 +12,10 @@ function Hero() {
   const t = useTranslations("HomePage");
 
   return (
-    <section className="relative isolate flex min-h-[calc(100svh-9rem)] w-full items-center justify-center overflow-hidden px-4 pb-5 pt-20 sm:px-8 lg:pt-28">
+    <section
+      id="home"
+      className="relative isolate flex min-h-[calc(100svh-9rem)] w-full scroll-mt-24 items-center justify-center overflow-hidden px-4 pb-5 pt-20 sm:px-8 lg:pt-28"
+    >
       {/* Background glow effects */}
       <div className="pointer-events-none absolute -top-32 -start-40 size-100 rounded-full bg-[var(--success)]/50 blur-[150px]" />
       <div className="pointer-events-none absolute -top-32 -end-40 size-100 rounded-full bg-[var(--success)]/50 blur-[150px]" />
