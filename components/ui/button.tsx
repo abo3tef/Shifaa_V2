@@ -1,6 +1,6 @@
-import { Button as ButtonPrimitive } from "@base-ui/react/button"
-import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
+import { Button as ButtonPrimitive } from "@base-ui/react/button";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "cn";
 
 const buttonVariants = cva(
   "group/button inline-flex shrink-0 items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -17,6 +17,20 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
+        // New btns for all used
+        main: "bg-[var(--main-button-background)] text-[var(--main-button-text-color)] hover:bg-[var(--main-button-hover-background)] hover:text-[var(--main-button-hover-text-color)]",
+        success:
+          "bg-[var(--success)] text-[var(--success-text-color)] hover:bg-[var(--success-hover-background)] hover:text-[var(--success-hover-text-color)]",
+        explore:
+          "h-14 cursor-pointer rounded-full border-[var(--border-color)] bg-[var(--cart-item-background)] px-7 text-base font-bold text-[var(--main-text-color)] shadow-[0_4px_12px_rgba(0,0,0,0.12)] hover:border-[var(--success)] hover:bg-[var(--success)]/10 hover:text-[var(--success-light)]",
+        start:
+          "h-14 cursor-pointer rounded-full bg-[var(--success)] px-8 text-base font-bold text-white shadow-[0_8px_24px_rgba(15,169,104,0.25)] hover:translate-y-[-1px] duration-200 hover:shadow-[0_12px_32px_rgba(15,169,104,0.35)]",
+        language:
+          "rounded-full border-[var(--border-color)] bg-transparent px-3 text-[var(--main-text-color)] hover:border-[var(--success)] hover:bg-[var(--success)]/10 hover:text-[var(--success-light)] duration-200",
+        danger:
+          "bg-[var(--danger)] text-[var(--danger-text-color)] hover:bg-[var(--danger-hover-background)] hover:text-[var(--danger-hover-text-color)]",
+        warning:
+          "bg-[var(--warning)] text-[var(--warning-text-color)] hover:bg-[var(--warning-hover-background)] hover:text-[var(--warning-hover-text-color)]",
       },
       size: {
         default:
@@ -36,8 +50,8 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
-)
+  },
+);
 
 function Button({
   className,
@@ -51,7 +65,7 @@ function Button({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
-  )
+  );
 }
 
-export { Button, buttonVariants }
+export { Button, buttonVariants };

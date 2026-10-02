@@ -98,8 +98,13 @@
   --success-light: #a6e8c4;
   --success-surface: #e3f7ec;
   --success-foreground: #08281c;
+  --bg-color: #0e0d18;
   --dark-panel-foreground: #f5f3ff;
   --dark-panel-muted: #c6c2e2;
+  --main-text-color: #f3f2fb;
+  --main-text-muted-color: #a9a8c2;
+  --cart-item-background: #171628;
+  --border-color: #26243d;
 }
 
 .dark {

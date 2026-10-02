@@ -1,6 +1,249 @@
 {
   "HomePage": {
     "title": "Intelligent care for every patient journey",
-    "description": "SHIFAA brings medical records, appointments, telemedicine, monitoring, reminders, and AI-assisted healthcare together in one secure platform."
+    "description": "SHIFAA brings medical records, appointments, telemedicine, monitoring, reminders, and AI-assisted healthcare together in one secure platform.",
+    "eyebrow": "Intelligent healthcare platform",
+    "register": "Get started",
+    "explorePlatform": "Explore platform",
+    "bannerLabel": "SHIFAA platform capabilities",
+    "bannerItems": {
+      "medicalRecords": "Medical records",
+      "aiInsights": "AI insights",
+      "remoteCare": "Remote care",
+      "monitoring": "Continuous monitoring",
+      "patientJourney": "Patient journey"
+    },
+    "problem": {
+      "eyebrow": "The problem",
+      "headingStrong": "Healthcare shouldn't feel",
+      "headingAccent": "fragmented.",
+      "cards": {
+        "fragmentedRecords": {
+          "title": "Fragmented records",
+          "description": "Medical information is scattered everywhere."
+        },
+        "lostHistory": {
+          "title": "Lost medical history",
+          "description": "Doctors piece history from many sources."
+        },
+        "disconnectedFollowUp": {
+          "title": "Disconnected follow-up",
+          "description": "Post-visit care isn't linked."
+        },
+        "tooMuchData": {
+          "title": "Too much data",
+          "description": "Lots of data, little clear insight."
+        }
+      }
+    },
+    "solution": {
+      "eyebrow": "The SHIFAA solution",
+      "headingStrong": "One platform.",
+      "headingAccent": "Connected care",
+      "headingEnd": "modules.",
+      "description": "Records, appointments, treatment, monitoring, AI and telemedicine, all in one data layer and one connected patient journey.",
+      "modules": {
+        "connected": {
+          "label": "CONNECTED",
+          "title": "One record, everywhere",
+          "description": "History follows the patient across every visit."
+        },
+        "clear": {
+          "label": "CLEAR",
+          "title": "Insight, not noise",
+          "description": "SHIFAA turns data into a clear summary."
+        },
+        "proactive": {
+          "label": "PROACTIVE",
+          "title": "Early warning",
+          "description": "Changes are flagged before they escalate."
+        },
+        "secure": {
+          "label": "SECURE",
+          "title": "Privacy by design",
+          "description": "Consent, roles and audit trails built in."
+        }
+      }
+    },
+    "howItWorks": {
+      "eyebrow": "How it works",
+      "previewLabel": "Care journey",
+      "preview": {
+        "record": "Health record always available",
+        "secure": "Secure, protected data",
+        "updated": "Real-time care team updates"
+      },
+      "steps": {
+        "profile": {
+          "title": "Create your health profile",
+          "description": "Records in one place.",
+          "detail": "Start with a complete health profile that keeps your medical history clear and ready for every visit."
+        },
+        "doctor": {
+          "title": "Connect with your doctor",
+          "description": "Visits and remote care.",
+          "detail": "Reach the right care team and stay connected inside or outside the clinic."
+        },
+        "progress": {
+          "title": "Track treatment and progress",
+          "description": "Medication and recovery.",
+          "detail": "Follow your signals, appointments, and care plan so the next step is always clear."
+        },
+        "insights": {
+          "title": "Get intelligent insights",
+          "description": "AI explains what changed.",
+          "detail": "SHIFAA turns health data into useful signals that support better decisions."
+        }
+      }
+    },
+    "features": {
+      "heading": "Everything you need in one place, without the noise.",
+      "records": {
+        "title": "Medical records",
+        "description": "Keep every visit, diagnosis, and result in one clear file.",
+        "rowOne": "Blood test",
+        "dateOne": "March 2026",
+        "rowTwo": "Cardiology visit",
+        "dateTwo": "January 2026",
+        "rowThree": "Previous diagnosis",
+        "dateThree": "October 2025"
+      },
+      "appointments": {
+        "title": "Smart appointments",
+        "description": "Book visits and receive reminders without the calls.",
+        "first": "Dr. Omar · Tuesday 10:30",
+        "second": "Lab visit · Thursday 09:00"
+      },
+      "telemedicine": {
+        "title": "Telemedicine",
+        "description": "Secure video, chat, and documents.",
+        "prompt": "How can we help you today?",
+        "action": "Start consultation"
+      },
+      "monitoring": {
+        "title": "Continuous monitoring",
+        "description": "Vital signals and alerts in real time."
+      },
+      "medication": {
+        "title": "Treatment & medication",
+        "description": "Prescriptions and daily follow-up.",
+        "progress": "Adherence this week"
+      }
+    },
+    "ai": {
+      "eyebrow": "AI inside SHIFAA",
+      "heading": "Intelligence for better care.",
+      "question": "Can you summarize the important changes in my health?",
+      "summaryTitle": "Smart medical summary",
+      "summary": "Your signals have been stable for 6 months. A small rise in blood pressure was detected over the last 5 days, so we recommend reviewing the next reading with your doctor.",
+      "followUpQuestion": "Are there any risks I should know about?",
+      "alertTitle": "Risk analysis",
+      "alertText": "A potential alert was detected. Consider reviewing the medication and booking a follow-up this week.",
+      "privacy": "Secure insights designed around your privacy",
+      "chips": {
+        "medication": "Medication adherence",
+        "riskAnalysis": "Risk analysis",
+        "smartAssistant": "Smart health assistant",
+        "followUp": "Automated follow-up"
+      }
+    },
+    "ecosystem": {
+      "eyebrow": "Care for everyone in the journey",
+      "heading": "Designed for everyone in care.",
+      "patient": {
+        "title": "Patients",
+        "description": "Stay close to your health from the first visit to every follow-up.",
+        "pointOne": "Appointments and reminders",
+        "pointTwo": "Unified health record",
+        "pointThree": "Clear personal insights"
+      },
+      "doctor": {
+        "title": "Doctors",
+        "description": "Everything your care team needs in one clear view.",
+        "pointOne": "Complete medical history",
+        "pointTwo": "Diagnosis, prescriptions, follow-up",
+        "pointThree": "Smart patient summaries"
+      },
+      "hospital": {
+        "title": "Hospitals",
+        "description": "Connect teams and data to improve care at scale.",
+        "pointOne": "Better team coordination",
+        "pointTwo": "Real-time operational view",
+        "pointThree": "Precise access and security"
+      },
+      "insightLabel": "Shared intelligence",
+      "insightTitle": "Every decision gets clearer with the right data.",
+      "insightDescription": "SHIFAA connects people, teams, and information into one trackable path for better care."
+    },
+    "about": {
+      "eyebrow": "Care you can trust",
+      "heading": "Your health data deserves better protection.",
+      "description": "SHIFAA brings your health journey into one clear, secure platform so you always know what is happening and what comes next.",
+      "points": {
+        "privacy": "Privacy first",
+        "clarity": "Always clear",
+        "continuity": "Connected care",
+        "control": "In your control"
+      },
+      "secure": "Built for security",
+      "private": "Your data stays yours",
+      "smart": "Smarter care"
+    },
+    "dashboard": {
+      "patient": "Patient overview",
+      "patientName": "Sarah Ahmed",
+      "live": "Live",
+      "bloodPressure": "Blood pressure",
+      "heartRate": "Heart rate",
+      "healthScore": "Health score",
+      "steps": "Steps",
+      "trend": "Health trend",
+      "lastSevenDays": "Last 7 days",
+      "status": "Health status",
+      "stable": "Stable",
+      "reminderTitle": "Medication reminder",
+      "reminderText": "Next dose today at 02:00 PM",
+      "nextVisit": "Next visit",
+      "visitTime": "Tuesday, 10:30 AM",
+      "aiInsight": "AI insight",
+      "insightText": "Strong stability this week"
+    }
+  },
+  "Navbar": {
+    "SHIFAA": "SHIFAA",
+    "home": "Home",
+    "How It Works": "How It Works",
+    "Features": "Features",
+    "Artificial Intelligence": "Artificial Intelligence",
+    "For Doctors": "For Doctors",
+    "For Hospitals": "For Hospitals",
+    "About Al-Shifaa": "About Al-Shifaa",
+    "signIn": "Sign in",
+    "explorePlatform": "Explore platform",
+    "register": "Get started",
+    "changeLanguage": "Change website language"
+  },
+  "Footer": {
+    "SHIFAA": "SHIFAA",
+    "description": "An intelligent healthcare platform for managing every patient journey with clarity and confidence.",
+    "platform": {
+      "title": "Platform",
+      "patients": "For Patients",
+      "doctors": "For Doctors",
+      "hospitals": "For Hospitals",
+      "ai": "AI & Telemedicine"
+    },
+    "company": {
+      "title": "Company",
+      "about": "About SHIFAA",
+      "contact": "Contact",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "socials": {
+      "title": "Socials"
+    },
+    "copyright": "© 2026 SHIFAA. All rights reserved.",
+    "tagline": "Smarter care, better journeys"
   }
 }

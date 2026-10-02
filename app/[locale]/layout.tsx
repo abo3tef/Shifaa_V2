@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Cairo } from "next/font/google";
+import Footer from "@/components/layout/footer";
+import Navbar from "@/components/layout/navbar";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import "lenis/dist/lenis.css";
 import "./globals.css";
@@ -107,10 +109,12 @@ export default async function RootLayout({
       dir={locale === "ar" ? "rtl" : "ltr"}
       className={`${cairo.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-screen flex-col bg-[var(--bg-color)] text-[var(--main-text-color)]">
         <SmoothScroll />
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
