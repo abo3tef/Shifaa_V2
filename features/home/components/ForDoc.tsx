@@ -2,19 +2,19 @@
 
 import { motion } from "framer-motion";
 import {
-  Building2,
-  Check,
-  LineChart,
-  Stethoscope,
-  UserRound,
-} from "lucide-react";
+  FiActivity,
+  FiCheck,
+  FiHome,
+  FiTrendingUp,
+  FiUser,
+} from "react-icons/fi";
 import { useTranslations } from "next-intl";
 
 function ForDoc() {
   const t = useTranslations("HomePage");
   const audiences = [
     {
-      icon: UserRound,
+      icon: FiUser,
       title: t("ecosystem.patient.title"),
       description: t("ecosystem.patient.description"),
       points: [
@@ -25,7 +25,7 @@ function ForDoc() {
       accent: "bg-[var(--success)]/15 text-[var(--success-light)]",
     },
     {
-      icon: Stethoscope,
+      icon: FiActivity,
       title: t("ecosystem.doctor.title"),
       description: t("ecosystem.doctor.description"),
       points: [
@@ -36,7 +36,7 @@ function ForDoc() {
       accent: "bg-[#7dd3fc]/12 text-[#7dd3fc]",
     },
     {
-      icon: Building2,
+      icon: FiHome,
       title: t("ecosystem.hospital.title"),
       description: t("ecosystem.hospital.description"),
       points: [
@@ -100,7 +100,7 @@ function ForDoc() {
                       className="flex items-center gap-2 text-xs text-[var(--main-text-muted-color)]"
                     >
                       <span className="flex size-4 items-center justify-center rounded-full bg-[var(--success)]/15 text-[var(--success-light)]">
-                        <Check size={10} />
+                        <FiCheck size={10} />
                       </span>
                       {point}
                     </li>
@@ -120,7 +120,7 @@ function ForDoc() {
         >
           <div>
             <div className="flex items-center gap-2 text-[var(--success-light)]">
-              <LineChart size={20} />
+              <FiTrendingUp size={20} />
               <span className="font-mono text-xs font-bold uppercase tracking-[0.16em]">
                 {t("ecosystem.insightLabel")}
               </span>

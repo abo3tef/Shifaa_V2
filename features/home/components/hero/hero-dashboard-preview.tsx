@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Activity, Bell, CalendarDays, HeartPulse } from "lucide-react";
+import { FiActivity, FiBell, FiCalendar, FiHeart } from "react-icons/fi";
 import { useTranslations } from "next-intl";
 import { Area, AreaChart, ResponsiveContainer, Tooltip } from "recharts";
 import { HEALTH_DATA } from "../../../../data/mockHealthData";
@@ -44,24 +44,24 @@ export function HeroDashboardPreview() {
 
         <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
           <MetricCard
-            icon={<Activity size={15} />}
+            icon={<FiActivity size={15} />}
             label={t("dashboard.bloodPressure")}
             value="118/76"
           />
           <MetricCard
-            icon={<HeartPulse size={15} />}
+            icon={<FiHeart size={15} />}
             label={t("dashboard.heartRate")}
             value="94"
             suffix="bpm"
           />
           <MetricCard
-            icon={<HeartPulse size={15} />}
+            icon={<FiHeart size={15} />}
             label={t("dashboard.healthScore")}
             value="92"
             suffix="%"
           />
           <MetricCard
-            icon={<Activity size={15} />}
+            icon={<FiActivity size={15} />}
             label={t("dashboard.steps")}
             value="7,842"
           />
@@ -139,7 +139,7 @@ export function HeroDashboardPreview() {
         transition={{ duration: 0.55, delay: 0.9 }}
         className="absolute -start-3 bottom-12 hidden w-48 rounded-2xl border border-[var(--border-color)] bg-[#201e3b] p-4 text-start shadow-[0_16px_35px_rgba(0,0,0,0.28)] lg:block"
       >
-        <Bell size={16} className="mb-2 text-[var(--success-light)]" />
+        <FiBell size={16} className="mb-2 text-[var(--success-light)]" />
         <p className="text-[11px] font-bold text-[var(--main-text-color)]">
           {t("dashboard.reminderTitle")}
         </p>
@@ -154,7 +154,7 @@ export function HeroDashboardPreview() {
         transition={{ duration: 0.55, delay: 1.05 }}
         className="absolute -end-3 top-20 hidden w-44 rounded-2xl border border-[var(--border-color)] bg-[#201e3b] p-4 text-start shadow-[0_16px_35px_rgba(0,0,0,0.28)] lg:block"
       >
-        <CalendarDays size={16} className="mb-2 text-[var(--success-light)]" />
+        <FiCalendar size={16} className="mb-2 text-[var(--success-light)]" />
         <p className="text-[11px] font-bold text-[var(--main-text-color)]">
           {t("dashboard.nextVisit")}
         </p>
@@ -170,7 +170,7 @@ export function HeroDashboardPreview() {
         className="absolute -bottom-7 left-1/2 hidden -translate-x-1/2 items-center gap-3 rounded-2xl border border-[var(--border-color)] bg-[#201e3b] px-4 py-3 text-start shadow-[0_16px_35px_rgba(0,0,0,0.28)] sm:flex"
       >
         <div className="flex size-9 items-center justify-center rounded-xl bg-[var(--success)]/15 text-[var(--success-light)]">
-          <HeartPulse size={17} />
+          <FiHeart size={17} />
         </div>
         <div>
           <p className="text-[10px] text-[var(--main-text-muted-color)]">

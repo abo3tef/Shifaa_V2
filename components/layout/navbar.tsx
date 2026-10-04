@@ -4,16 +4,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
-import { navItems } from "../../types/nav";
+import { navItems } from "../../features/home/types/nav";
 import { Button } from "../ui/button";
 import LanguageSwitcher from "./language-switcher";
 import Image from "next/image";
+import { Link } from "@/i18n/navigation";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const locale = useLocale();
   const t = useTranslations("Navbar");
   const orderedNavItems = locale === "ar" ? [...navItems].reverse() : navItems;
+  const getSectionHref = (href: string) => `/${locale}${href}`;
 
   return (
     <motion.nav
@@ -38,7 +40,7 @@ function Navbar() {
         {orderedNavItems.map((item) => (
           <li key={item.titleKey} className="shrink-0">
             <a
-              href={item.href}
+              href={getSectionHref(item.href)}
               className="whitespace-nowrap text-xs font-semibold text-[var(--main-text-muted-color)] transition-colors hover:text-[var(--success-light)] sm:text-sm"
             >
               {t(item.titleKey)}
@@ -52,9 +54,11 @@ function Navbar() {
         <Button variant="explore" className="hidden md:inline-flex">
           {t("explorePlatform")}
         </Button>
-        <Button variant="start" className="h-10 px-6">
-          {t("register")}
-        </Button>
+        <Link href="/register" locale={locale}>
+          <Button variant="start" className="h-10 px-6">
+            {t("register")}
+          </Button>
+        </Link>
       </div>
       {/* Mobile menu button */}
       <div className="absolute end-2 top-1/2 flex -translate-y-1/2 items-center gap-1 md:hidden">
@@ -98,7 +102,7 @@ function Navbar() {
                   transition={{ delay: index * 0.035, duration: 0.2 }}
                 >
                   <a
-                    href={item.href}
+                    href={getSectionHref(item.href)}
                     onClick={() => setIsMenuOpen(false)}
                     className="block rounded-xl px-4 py-2.5 text-sm font-semibold text-[var(--main-text-muted-color)] transition-colors hover:bg-[var(--success)]/10 hover:text-[var(--success-light)]"
                   >

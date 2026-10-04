@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { cards } from "../../../types/cards";
+import { cards } from "../types/cards";
 function CardsTow() {
   const t = useTranslations("HomePage");
 

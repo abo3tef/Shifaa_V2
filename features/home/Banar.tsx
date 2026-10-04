@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+import { FiStar } from "react-icons/fi";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -54,7 +54,7 @@ function Banar() {
             className="flex shrink-0 items-center gap-14 px-8 text-[11px] font-bold uppercase tracking-[0.22em] text-[var(--main-text-muted-color)] sm:text-xs"
           >
             <span className="whitespace-nowrap">{item}</span>
-            <Sparkles
+            <FiStar
               size={13}
               strokeWidth={2.5}
               className="text-[var(--success-light)]"

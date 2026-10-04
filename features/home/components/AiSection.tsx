@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Activity, Send, ShieldCheck, Sparkles } from "lucide-react";
+import { FiActivity, FiSend, FiShield, FiStar } from "react-icons/fi";
 import { useTranslations } from "next-intl";
 
 function AiSection() {
@@ -48,7 +48,7 @@ function AiSection() {
             className="max-w-xl rounded-2xl bg-white p-5 text-start text-sm leading-7 text-[#17352d] shadow-[0_12px_30px_rgba(0,0,0,0.12)]"
           >
             <div className="mb-2 flex items-center gap-2 font-bold text-[var(--success)]">
-              <Sparkles size={16} />
+              <FiStar size={16} />
               {t("ai.summaryTitle")}
             </div>
             {t("ai.summary")}
@@ -72,7 +72,7 @@ function AiSection() {
             className="max-w-xl rounded-2xl bg-white p-5 text-start text-sm leading-7 text-[#17352d] shadow-[0_12px_30px_rgba(0,0,0,0.12)]"
           >
             <div className="mb-2 flex items-center gap-2 font-bold text-[var(--success)]">
-              <Activity size={16} />
+              <FiActivity size={16} />
               {t("ai.alertTitle")}
             </div>
             {t("ai.alertText")}
@@ -94,10 +94,10 @@ function AiSection() {
 
         <div className="mx-auto mt-7 flex max-w-2xl items-center justify-between gap-3 rounded-2xl border border-white/10 bg-black/10 px-4 py-3 text-xs text-white/60">
           <span className="flex items-center gap-2">
-            <ShieldCheck size={15} className="text-[var(--success-light)]" />
+            <FiShield size={15} className="text-[var(--success-light)]" />
             {t("ai.privacy")}
           </span>
-          <Send size={15} className="text-[var(--success-light)]" />
+          <FiSend size={15} className="text-[var(--success-light)]" />
         </div>
       </motion.div>
     </section>

@@ -246,5 +246,103 @@
     },
     "copyright": "© 2026 SHIFAA. All rights reserved.",
     "tagline": "Smarter care, better journeys"
+  },
+  "Auth": {
+    "Register": {
+      "backHome": "Back to home",
+      "eyebrow": "Join SHIFAA",
+      "title": "Create your account",
+      "description": "Start your health journey in one clear, secure platform.",
+      "fields": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email address",
+        "phone": "Phone number",
+        "password": "Password"
+      },
+      "placeholders": {
+        "firstName": "e.g. Sarah",
+        "lastName": "e.g. Ahmed",
+        "email": "name@example.com",
+        "phone": "Phone number with country code",
+        "password": "At least 8 characters"
+      },
+      "validation": {
+        "firstName": "First name must be at least 2 characters.",
+        "lastName": "Last name must be at least 2 characters.",
+        "email": "Enter a valid email address.",
+        "phone": "Enter a valid phone number.",
+        "password": "Use 8 characters with one uppercase letter and one number."
+      },
+      "submit": "Create account",
+      "or": "OR",
+      "google": "Continue with Google",
+      "passwordStrength": "Password strength",
+      "passwordHint": "Good",
+      "termsPrefix": "I agree to the",
+      "terms": "terms and privacy policy",
+      "submitting": "Creating account...",
+      "success": "Your account was created successfully.",
+      "error": "We could not create your account right now. Try again.",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in",
+      "side": {
+        "healthScore": "Health score",
+        "nextVisit": "Next visit",
+        "visitValue": "Tuesday · 10:30",
+        "heading": "Your complete health journey, connected in one place.",
+        "description": "Bring your records, appointments, and follow-up together in an experience designed around your care.",
+        "secure": "Your health data is protected and encrypted"
+      }
+    },
+    "Login": {
+      "backHome": "Back to home",
+      "eyebrow": "Welcome back",
+      "title": "Sign in to SHIFAA",
+      "description": "Continue your health journey with clarity and confidence.",
+      "fields": {
+        "email": "Email address",
+        "password": "Password"
+      },
+      "placeholders": {
+        "email": "name@example.com",
+        "password": "Enter your password"
+      },
+      "remember": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign in",
+      "or": "OR",
+      "google": "Continue with Google",
+      "noAccount": "Don't have an account?",
+      "register": "Create one",
+      "side": {
+        "healthScore": "Health score",
+        "nextVisit": "Next visit",
+        "visitValue": "Tuesday · 10:30",
+        "heading": "Your care continues after you sign in.",
+        "description": "Open your records, appointments, and health insights in one space designed around you.",
+        "secure": "Your health data is protected and encrypted"
+      }
+    },
+    "ForgotPassword": {
+      "backLogin": "Back to sign in",
+      "eyebrow": "Restore access",
+      "title": "Forgot your password?",
+      "description": "Enter your email and we will help you get back into your account.",
+      "email": "Email address",
+      "placeholder": "name@example.com",
+      "submit": "Send reset link",
+      "secure": "Your data stays private"
+    },
+    "VerifyEmail": {
+      "backRegister": "Back to registration",
+      "eyebrow": "Verify your email",
+      "title": "Enter your verification code",
+      "description": "We sent a 6-digit code to your email address.",
+      "submit": "Verify email",
+      "resend": "Didn't receive the code?",
+      "resendAction": "Resend code",
+      "secure": "Your code is temporary and secure"
+    }
   }
 }

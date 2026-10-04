@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { Activity, Brain, ClipboardPlus, Stethoscope } from "lucide-react";
+import { FiActivity, FiClipboard, FiCpu } from "react-icons/fi";
 import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 
@@ -25,7 +25,7 @@ function HowItWork() {
       title: t("howItWorks.steps.profile.title"),
       description: t("howItWorks.steps.profile.description"),
       detail: t("howItWorks.steps.profile.detail"),
-      icon: ClipboardPlus,
+      icon: FiClipboard,
       color: "text-[var(--success-light)]",
     },
     {
@@ -33,7 +33,7 @@ function HowItWork() {
       title: t("howItWorks.steps.doctor.title"),
       description: t("howItWorks.steps.doctor.description"),
       detail: t("howItWorks.steps.doctor.detail"),
-      icon: Stethoscope,
+      icon: FiActivity,
       color: "text-[#7dd3fc]",
     },
     {
@@ -41,7 +41,7 @@ function HowItWork() {
       title: t("howItWorks.steps.progress.title"),
       description: t("howItWorks.steps.progress.description"),
       detail: t("howItWorks.steps.progress.detail"),
-      icon: Activity,
+      icon: FiActivity,
       color: "text-[#c4b5fd]",
     },
     {
@@ -49,7 +49,7 @@ function HowItWork() {
       title: t("howItWorks.steps.insights.title"),
       description: t("howItWorks.steps.insights.description"),
       detail: t("howItWorks.steps.insights.detail"),
-      icon: Brain,
+      icon: FiCpu,
       color: "text-[#f0abfc]",
     },
   ];

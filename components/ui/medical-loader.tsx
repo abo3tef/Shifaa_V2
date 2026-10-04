@@ -1,4 +1,4 @@
-import { HeartPulse } from "lucide-react";
+import { FiActivity } from "react-icons/fi";
 
 function MedicalLoader({
   overlay = false,
@@ -18,7 +18,7 @@ function MedicalLoader({
           <span className="absolute inset-0 rounded-full border border-[var(--success)]/20" />
           <span className="absolute inset-1 rounded-full border-2 border-transparent border-t-[var(--success)] border-e-[var(--success-light)] animate-spin" />
           <span className="flex size-12 items-center justify-center rounded-2xl bg-[var(--success)]/15 text-[var(--success-light)] shadow-[0_0_30px_rgba(15,169,104,0.2)]">
-            <HeartPulse
+            <FiActivity
               size={26}
               className="animate-pulse"
               aria-hidden="true"

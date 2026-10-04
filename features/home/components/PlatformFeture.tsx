@@ -2,13 +2,13 @@
 
 import { motion } from "framer-motion";
 import {
-  Activity,
-  BellRing,
-  CalendarClock,
-  FileHeart,
-  Pill,
-  Video,
-} from "lucide-react";
+  FiActivity,
+  FiBell,
+  FiCalendar,
+  FiFileText,
+  FiPackage,
+  FiVideo,
+} from "react-icons/fi";
 import { useTranslations } from "next-intl";
 
 function PlatformFeture() {
@@ -16,7 +16,7 @@ function PlatformFeture() {
 
   const featureCards = [
     {
-      icon: Video,
+      icon: FiVideo,
       title: t("features.telemedicine.title"),
       description: t("features.telemedicine.description"),
       content: (
@@ -26,13 +26,13 @@ function PlatformFeture() {
           </div>
           <div className="mt-3 flex items-center justify-between rounded-xl bg-[var(--success)] px-4 py-3 text-xs font-bold text-white">
             <span>{t("features.telemedicine.action")}</span>
-            <Video size={15} />
+            <FiVideo size={15} />
           </div>
         </>
       ),
     },
     {
-      icon: Activity,
+      icon: FiActivity,
       title: t("features.monitoring.title"),
       description: t("features.monitoring.description"),
       content: (
@@ -51,7 +51,7 @@ function PlatformFeture() {
       ),
     },
     {
-      icon: Pill,
+      icon: FiPackage,
       title: t("features.medication.title"),
       description: t("features.medication.description"),
       content: (
@@ -97,7 +97,7 @@ function PlatformFeture() {
         <div className="mt-12 grid gap-4 md:grid-cols-12">
           <FeatureCard
             className="md:col-span-8"
-            icon={<FileHeart size={20} />}
+            icon={<FiFileText size={20} />}
             title={t("features.records.title")}
             description={t("features.records.description")}
           >
@@ -128,7 +128,7 @@ function PlatformFeture() {
 
           <FeatureCard
             className="bg-[var(--success)] text-white md:col-span-4"
-            icon={<CalendarClock size={20} />}
+            icon={<FiCalendar size={20} />}
             title={t("features.appointments.title")}
             description={t("features.appointments.description")}
             green
@@ -207,7 +207,7 @@ function Appointment({ label }: { label: string }) {
   return (
     <div className="flex items-center justify-between rounded-xl bg-white/15 px-4 py-3 text-xs font-semibold">
       <span>{label}</span>
-      <BellRing size={14} />
+      <FiBell size={14} />
     </div>
   );
 }

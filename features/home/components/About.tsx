@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, LockKeyhole, ShieldCheck, Sparkles } from "lucide-react";
+import { FiArrowUpRight, FiLock, FiShield, FiStar } from "react-icons/fi";
 import { useTranslations } from "next-intl";
 import { Link } from "../../../i18n/navigation";
 import { buttonVariants } from "../../../components/ui/button";
@@ -67,7 +67,7 @@ function About() {
               )}
             >
               {t("explorePlatform")}
-              <ArrowUpRight size={16} />
+              <FiArrowUpRight size={16} />
             </Link>
             <Link
               href="/for-patients"
@@ -82,15 +82,15 @@ function About() {
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-5 text-xs font-semibold text-white/75">
             <span className="flex items-center gap-2">
-              <ShieldCheck size={16} />
+              <FiShield size={16} />
               {t("about.secure")}
             </span>
             <span className="flex items-center gap-2">
-              <LockKeyhole size={15} />
+              <FiLock size={15} />
               {t("about.private")}
             </span>
             <span className="flex items-center gap-2">
-              <Sparkles size={15} />
+              <FiStar size={15} />
               {t("about.smart")}
             </span>
           </div>
