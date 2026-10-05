@@ -116,9 +116,11 @@ function Navbar() {
               <Button variant="explore" className="h-10 px-3 text-xs">
                 {t("explorePlatform")}
               </Button>
-              <Button variant="start" className="h-10 px-3 text-xs">
-                {t("register")}
-              </Button>
+              <Link href="/register" locale={locale}>
+                <Button variant="start" className="h-10 px-3 text-xs">
+                  {t("register")}
+                </Button>
+              </Link>
             </div>
           </motion.div>
         )}
