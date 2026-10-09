@@ -253,6 +253,11 @@
       "eyebrow": "Join SHIFAA",
       "title": "Create your account",
       "description": "Start your health journey in one clear, secure platform.",
+      "accountType": {
+        "label": "Account type",
+        "patient": "Patient",
+        "doctor": "Doctor"
+      },
       "fields": {
         "firstName": "First name",
         "lastName": "Last name",
@@ -279,6 +284,17 @@
       "google": "Continue with Google",
       "passwordStrength": "Password strength",
       "passwordHint": "Good",
+      "doctorDetails": {
+        "title": "Doctor details",
+        "specialization": "Specialization",
+        "specializationPlaceholder": "e.g. Cardiology",
+        "yearsOfExperience": "Years of experience",
+        "bio": "Professional bio",
+        "bioPlaceholder": "Write a short summary of your experience and specialty",
+        "hospitalId": "Hospital ID",
+        "departmentId": "Department ID",
+        "licenseNumber": "License number"
+      },
       "termsPrefix": "I agree to the",
       "terms": "terms and privacy policy",
       "submitting": "Creating account...",

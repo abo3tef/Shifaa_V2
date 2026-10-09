@@ -1,8 +1,15 @@
 "use client";
 
-import { FiActivity, FiArrowRight, FiCalendar, FiShield } from "react-icons/fi";
+import {
+  FiActivity,
+  FiArrowRight,
+  FiCalendar,
+  FiShield,
+  FiUser,
+} from "react-icons/fi";
 import { useTranslations } from "next-intl";
 import { PhoneInput } from "react-international-phone";
+import { useState } from "react";
 import { Link } from "../../../i18n/navigation";
 import { Button } from "../../../components/ui/button";
 import GoogleButton from "../../../components/ui/google-button";
@@ -10,6 +17,9 @@ import Image from "next/image";
 
 function RegisterForm() {
   const t = useTranslations("Auth.Register");
+  const [accountType, setAccountType] = useState<"PATIENT" | "DOCTOR">(
+    "PATIENT",
+  );
 
   return (
     <main className="min-h-screen bg-[var(--bg-color)] px-3 py-3 mt-20 sm:px-6 sm:py-6 lg:px-8">
@@ -80,6 +90,32 @@ function RegisterForm() {
             </div>
 
             <form className="mt-8 space-y-4">
+              <div className="space-y-2">
+                <span className="block text-sm font-semibold text-[var(--main-text-color)]">
+                  {t("accountType.label")}
+                </span>
+                <div className="grid grid-cols-2 gap-3">
+                  <Button
+                    type="button"
+                    variant={accountType === "PATIENT" ? "start" : "outline"}
+                    className={`h-12 rounded-2xl text-sm ${accountType === "PATIENT" ? "!text-white" : "!text-black"}`}
+                    onClick={() => setAccountType("PATIENT")}
+                  >
+                    <FiUser size={17} />
+                    {t("accountType.patient")}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={accountType === "DOCTOR" ? "start" : "outline"}
+                    className={`h-12 rounded-2xl text-sm ${accountType === "DOCTOR" ? "!text-white" : "!text-black"}`}
+                    onClick={() => setAccountType("DOCTOR")}
+                  >
+                    <FiActivity size={17} />
+                    {t("accountType.doctor")}
+                  </Button>
+                </div>
+              </div>
+
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field label={t("fields.firstName")}>
                   <input
@@ -145,6 +181,42 @@ function RegisterForm() {
                   autoComplete="new-password"
                 />
               </Field>
+
+              {accountType === "DOCTOR" && (
+                <div className="space-y-4 rounded-2xl p-4">
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Field label={t("doctorDetails.specialization")}>
+                      <input
+                        type="text"
+                        placeholder={t(
+                          "doctorDetails.specializationPlaceholder",
+                        )}
+                      />
+                    </Field>
+                    <Field label={t("doctorDetails.yearsOfExperience")}>
+                      <input type="number" min="0" placeholder="8" />
+                    </Field>
+                  </div>
+                  {/* <Field label={t("doctorDetails.licenseNumber")}>
+                    <input type="text" placeholder="EG-MED-123456" />
+                  </Field>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <Field label={t("doctorDetails.hospitalId")}>
+                      <input type="number" min="1" placeholder="1" />
+                    </Field>
+                    <Field label={t("doctorDetails.departmentId")}>
+                      <input type="number" min="1" placeholder="2" />
+                    </Field>
+                  </div> */}
+                  <label className="block text-sm font-semibold text-[var(--main-text-color)]">
+                    <span>{t("doctorDetails.bio")}</span>
+                    <textarea
+                      placeholder={t("doctorDetails.bioPlaceholder")}
+                      className="mt-2 min-h-24 w-full resize-y rounded-2xl border border-[var(--border-color)] bg-[var(--cart-item-background)] px-4 py-3 text-sm font-normal text-[var(--main-text-color)] outline-none placeholder:text-[var(--main-text-muted-color)] focus:border-[var(--success)]"
+                    />
+                  </label>
+                </div>
+              )}
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-[11px] text-[var(--main-text-muted-color)]">

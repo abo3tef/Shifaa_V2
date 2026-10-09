@@ -253,6 +253,11 @@
       "eyebrow": "انضم إلى شفاء",
       "title": "أنشئ حسابك",
       "description": "ابدأ رحلتك الصحية في منصة واحدة واضحة وآمنة.",
+      "accountType": {
+        "label": "نوع الحساب",
+        "patient": "مريض",
+        "doctor": "طبيب"
+      },
       "fields": {
         "firstName": "الاسم الأول",
         "lastName": "اسم العائلة",
@@ -279,6 +284,17 @@
       "google": "المتابعة باستخدام Google",
       "passwordStrength": "قوة كلمة المرور",
       "passwordHint": "جيدة",
+      "doctorDetails": {
+        "title": "بيانات الطبيب",
+        "specialization": "التخصص",
+        "specializationPlaceholder": "مثال: القلب والأوعية",
+        "yearsOfExperience": "سنوات الخبرة",
+        "bio": "نبذة مهنية",
+        "bioPlaceholder": "اكتب نبذة مختصرة عن خبرتك وتخصصك",
+        "hospitalId": "رقم المستشفى",
+        "departmentId": "رقم القسم",
+        "licenseNumber": "رقم الترخيص"
+      },
       "termsPrefix": "أوافق على",
       "terms": "الشروط وسياسة الخصوصية",
       "submitting": "جارٍ إنشاء الحساب...",
