@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/navbar";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import "lenis/dist/lenis.css";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -113,7 +114,9 @@ export default async function RootLayout({
         <SmoothScroll />
         <NextIntlClientProvider messages={messages}>
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1">
+            <Providers>{children}</Providers>
+          </main>
           <Footer />
         </NextIntlClientProvider>
       </body>
