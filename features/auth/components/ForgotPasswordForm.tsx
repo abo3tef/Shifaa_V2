@@ -1,11 +1,42 @@
-import { FiArrowRight, FiKey, FiShield } from "react-icons/fi";
+"use client";
+
+import { useState } from "react";
+import { FiArrowRight, FiKey, FiLoader, FiShield } from "react-icons/fi";
+import { isAxiosError } from "axios";
 import { useTranslations } from "next-intl";
-import { Link } from "../../../i18n/navigation";
+import { toast } from "react-toastify";
+import { Link, useRouter } from "../../../i18n/navigation";
 import { Button } from "../../../components/ui/button";
 import AuthVisualPanel from "./AuthVisualPanel";
+import { useForgotPassword } from "../hooks/useForgotPassword";
 
 function ForgotPasswordForm() {
   const t = useTranslations("Auth.ForgotPassword");
+  const router = useRouter();
+  const { mutate: requestReset, isPending } = useForgotPassword();
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const normalizedEmail = email.trim();
+
+    requestReset(
+      { email: normalizedEmail },
+      {
+        onSuccess: () => {
+          sessionStorage.setItem("pending_password_reset_email", normalizedEmail);
+          toast.success(t("toasts.requestSuccess"));
+          router.push("/reset-password");
+        },
+        onError: (error: unknown) => {
+          const message = isAxiosError(error) && error.response?.status === 429
+            ? t("toasts.rateLimited")
+            : t("toasts.requestError");
+          toast.error(message);
+        },
+      },
+    );
+  };
 
   return (
     <main className="min-h-screen bg-[var(--bg-color)] px-3 py-3 mt-20 sm:px-6 sm:py-6 lg:px-8">
@@ -34,22 +65,33 @@ function ForgotPasswordForm() {
                 {t("description")}
               </p>
             </div>
-            <form className="mt-8 space-y-4">
+            <form onSubmit={handleSubmit} className="mt-8 space-y-4">
               <label className="block text-sm font-semibold text-[var(--main-text-color)]">
                 {t("email")}
                 <input
                   type="email"
+                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
                   placeholder={t("placeholder")}
                   autoComplete="email"
                   className="mt-2 h-12 w-full rounded-2xl border border-[var(--border-color)] bg-[var(--cart-item-background)] px-4 text-sm text-[var(--main-text-color)] outline-none placeholder:text-[var(--main-text-muted-color)] focus:border-[var(--success)]"
                 />
               </label>
               <Button
-                type="button"
+                type="submit"
                 variant="start"
+                disabled={isPending}
                 className="h-12 w-full text-sm"
               >
-                {t("submit")}
+                {isPending ? (
+                  <span className="inline-flex items-center gap-2">
+                    <FiLoader className="animate-spin" />
+                    {t("submitting")}
+                  </span>
+                ) : (
+                  t("submit")
+                )}
               </Button>
             </form>
             <p className="mt-6 flex items-center justify-center gap-2 text-xs text-[var(--main-text-muted-color)] lg:justify-start">

@@ -6,6 +6,7 @@ import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import "lenis/dist/lenis.css";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import { Providers } from "./providers";
 

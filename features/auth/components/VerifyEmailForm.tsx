@@ -1,14 +1,91 @@
 "use client";
 
-import { FiArrowRight, FiMail, FiShield } from "react-icons/fi";
+import { FiArrowRight, FiMail, FiShield, FiLoader } from "react-icons/fi";
 import { useTranslations } from "next-intl";
 import { OTPInput } from "input-otp";
-import { Link } from "../../../i18n/navigation";
+import { Link, useRouter } from "../../../i18n/navigation";
 import { Button } from "../../../components/ui/button";
 import AuthVisualPanel from "./AuthVisualPanel";
+import { useState, useEffect } from "react";
+import { useVerifyEmail } from "../hooks/useVerifyEmail";
+import { useResendVerification } from "../hooks/useResendVerification";
+import { useStore } from "../store/auth.store";
+import { toast } from "react-toastify";
+import { isAxiosError } from "axios";
+import { getDashboardPath } from "@/features/dashboard/utils/getDashboardPath";
 
 function VerifyEmailForm() {
   const t = useTranslations("Auth.VerifyEmail");
+  const router = useRouter();
+  const { mutate: verifyEmail, isPending } = useVerifyEmail();
+  const { mutate: resendCode, isPending: isResending } =
+    useResendVerification();
+  const setCredentials = useStore((state) => state.setCredentials);
+
+  const [otpValue, setOtpValue] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const savedEmail = sessionStorage.getItem("pending_verify_email");
+    if (savedEmail) {
+      queueMicrotask(() => setEmail(savedEmail));
+    }
+  }, []);
+
+  const handleVerify = () => {
+    if (otpValue.length !== 6) {
+      toast.error(t("toasts.codeRequired"));
+      return;
+    }
+
+    if (!email) {
+      toast.error(t("toasts.emailMissingForVerify"));
+      return;
+    }
+
+    verifyEmail(
+      { email, code: otpValue },
+      {
+        onSuccess: (data) => {
+          toast.success(t("toasts.verifySuccess"));
+          setCredentials(data.user, data.accessToken, data.refreshToken);
+          sessionStorage.removeItem("pending_verify_email");
+          router.push(getDashboardPath(data.user.role));
+        },
+        onError: (err: unknown) => {
+          const responseMessage = isAxiosError<{ message?: string | string[] }>(err)
+            ? err.response?.data?.message
+            : undefined;
+          const message = Array.isArray(responseMessage)
+            ? responseMessage.join(", ")
+            : responseMessage || t("toasts.verifyError");
+          toast.error(message);
+        },
+      },
+    );
+  };
+
+  const handleResend = () => {
+    if (!email) {
+      toast.error(t("toasts.emailMissingForResend"));
+      return;
+    }
+
+    resendCode(email, {
+      onSuccess: () => {
+        toast.success(t("toasts.resendSuccess"));
+      },
+      onError: (err: unknown) => {
+        const responseMessage = isAxiosError<{ message?: string | string[] }>(err)
+          ? err.response?.data?.message
+          : undefined;
+        const message = Array.isArray(responseMessage)
+          ? responseMessage.join(", ")
+          : responseMessage || t("toasts.resendError");
+        toast.error(message);
+      },
+    });
+  };
 
   return (
     <main className="min-h-screen bg-[var(--bg-color)] px-3 py-3 mt-20 sm:px-6 sm:py-6 lg:px-8">
@@ -23,6 +100,7 @@ function VerifyEmailForm() {
               <FiArrowRight size={15} className="rtl:rotate-180" />
               {t("backRegister")}
             </Link>
+
             <div className="mt-12 text-center lg:text-start">
               <span className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-[var(--success)]/15 text-[var(--success-light)] lg:mx-0">
                 <FiMail size={26} />
@@ -34,15 +112,23 @@ function VerifyEmailForm() {
                 {t("title")}
               </h1>
               <p className="mt-4 max-w-md text-sm leading-7 text-[var(--main-text-muted-color)]">
-                {t("description")}
+                {t("description")}{" "}
+                {email && (
+                  <span className="font-bold text-[var(--success-light)]">
+                    ({email})
+                  </span>
+                )}
               </p>
             </div>
+
             <div
               dir="ltr"
               className="mt-9 flex justify-center lg:justify-start"
             >
               <OTPInput
                 maxLength={6}
+                value={otpValue}
+                onChange={(val) => setOtpValue(val)}
                 pattern="^[0-9]+$"
                 inputMode="numeric"
                 containerClassName="flex items-center gap-2 sm:gap-3"
@@ -63,22 +149,36 @@ function VerifyEmailForm() {
                 )}
               />
             </div>
+
             <Button
               type="button"
               variant="start"
-              className="mt-8 h-12 w-full text-sm"
+              disabled={isPending}
+              onClick={handleVerify}
+              className="mt-8 h-12 w-full text-sm disabled:bg-gray-500 flex items-center justify-center gap-2"
             >
-              {t("submit")}
+              {isPending ? (
+                <>
+                  <FiLoader className="animate-spin size-5" />
+                    <span>{t("verifying")}</span>
+                </>
+              ) : (
+                t("submit")
+              )}
             </Button>
+
             <p className="mt-5 text-center text-xs text-[var(--main-text-muted-color)] lg:text-start">
               {t("resend")}{" "}
               <button
                 type="button"
-                className="font-bold text-[var(--success-light)] hover:underline"
+                onClick={handleResend}
+                disabled={isResending}
+                className="font-bold text-[var(--success-light)] hover:underline disabled:opacity-50"
               >
-                {t("resendAction")}
+                {isResending ? t("resending") : t("resendAction")}
               </button>
             </p>
+
             <p className="mt-5 flex items-center justify-center gap-2 text-xs text-[var(--main-text-muted-color)] lg:justify-start">
               <FiShield size={15} className="text-[var(--success-light)]" />
               {t("secure")}

@@ -1,5 +1,10 @@
 {
+  "Dashboard": {
+    "patientLabel": "Patient dashboard",
+    "doctorLabel": "Doctor dashboard"
+  },
   "HomePage": {
+    "brand": "SHIFAA",
     "title": "Intelligent care for every patient journey",
     "description": "SHIFAA brings medical records, appointments, telemedicine, monitoring, reminders, and AI-assisted healthcare together in one secure platform.",
     "eyebrow": "Intelligent healthcare platform",
@@ -280,8 +285,10 @@
         "password": "Use 8 characters with one uppercase letter and one number."
       },
       "submit": "Create account",
+      "creatingAccount": "Creating account...",
       "or": "OR",
       "google": "Continue with Google",
+      "googleSigningIn": "Connecting to Google...",
       "passwordStrength": "Password strength",
       "passwordHint": "Good",
       "doctorDetails": {
@@ -293,7 +300,9 @@
         "bioPlaceholder": "Write a short summary of your experience and specialty",
         "hospitalId": "Hospital ID",
         "departmentId": "Department ID",
-        "licenseNumber": "License number"
+        "licenseNumber": "License number",
+        "loadingSpecializations": "Loading specializations...",
+        "licensePlaceholder": "e.g. EG-MED-123456"
       },
       "termsPrefix": "I agree to the",
       "terms": "terms and privacy policy",
@@ -309,6 +318,22 @@
         "heading": "Your complete health journey, connected in one place.",
         "description": "Bring your records, appointments, and follow-up together in an experience designed around your care.",
         "secure": "Your health data is protected and encrypted"
+      },
+      "passwordLevels": {
+        "veryWeak": "Very weak",
+        "weak": "Weak",
+        "medium": "Fair",
+        "strong": "Strong",
+        "veryStrong": "Very strong"
+      },
+      "toasts": {
+        "specializationsError": "Could not load the specialization list.",
+        "licenseRequired": "Enter your medical license number.",
+        "registerSuccess": "Your account was created. We sent a verification code to your email.",
+        "registerError": "We could not create your account. Please try again.",
+        "googleNotConfigured": "Google sign-in is not configured yet.",
+        "googlePopupClosed": "The Google sign-in window was closed before finishing.",
+        "googleError": "Google sign-in failed. Please try again."
       }
     },
     "Login": {
@@ -327,8 +352,18 @@
       "remember": "Remember me",
       "forgotPassword": "Forgot password?",
       "submit": "Sign in",
+      "signingIn": "Signing in...",
       "or": "OR",
       "google": "Continue with Google",
+      "googleSigningIn": "Connecting to Google...",
+      "errors": {
+        "invalidCredentials": "The email or password is incorrect.",
+        "accountUnavailable": "Verify your email or contact support to restore account access.",
+        "loginFailed": "We could not sign you in. Please try again.",
+        "googleNotConfigured": "Google sign-in is not configured yet.",
+        "googlePopupClosed": "The Google sign-in window was closed before finishing.",
+        "googleFailed": "Google sign-in failed. Please try again."
+      },
       "noAccount": "Don't have an account?",
       "register": "Create one",
       "side": {
@@ -348,7 +383,37 @@
       "email": "Email address",
       "placeholder": "name@example.com",
       "submit": "Send reset link",
-      "secure": "Your data stays private"
+      "submitting": "Sending code...",
+      "secure": "Your data stays private",
+      "toasts": {
+        "requestSuccess": "If an account exists for this email, we sent it a password reset code.",
+        "requestError": "We could not send a reset code. Please try again.",
+        "rateLimited": "Too many attempts. Wait a few minutes and try again."
+      }
+    },
+    "ResetPassword": {
+      "backForgotPassword": "Back to password recovery",
+      "eyebrow": "Choose a new password",
+      "title": "Reset your password",
+      "description": "Enter the 6-digit code from your email and choose a new password.",
+      "email": "Email address",
+      "emailPlaceholder": "name@example.com",
+      "code": "Reset code",
+      "codePlaceholder": "6-digit code",
+      "newPassword": "New password",
+      "passwordPlaceholder": "At least 8 characters",
+      "confirmPassword": "Confirm new password",
+      "confirmPasswordPlaceholder": "Re-enter your new password",
+      "submit": "Save new password",
+      "submitting": "Saving password...",
+      "secure": "The reset code expires after 10 minutes.",
+      "toasts": {
+        "passwordMismatch": "The passwords do not match.",
+        "resetSuccess": "Your password has been changed. Sign in with your new password.",
+        "invalidCode": "The reset code is invalid, expired, or already used.",
+        "resetError": "We could not reset your password. Please try again.",
+        "rateLimited": "Too many attempts. Wait a few minutes and try again."
+      }
     },
     "VerifyEmail": {
       "backRegister": "Back to registration",
@@ -358,7 +423,18 @@
       "submit": "Verify email",
       "resend": "Didn't receive the code?",
       "resendAction": "Resend code",
-      "secure": "Your code is temporary and secure"
+      "secure": "Your code is temporary and secure",
+      "verifying": "Verifying...",
+      "resending": "Sending...",
+      "toasts": {
+        "codeRequired": "Enter the complete 6-digit verification code.",
+        "emailMissingForVerify": "We could not find your email. Please register again.",
+        "verifySuccess": "Your account has been verified.",
+        "verifyError": "The verification code is invalid or has expired.",
+        "emailMissingForResend": "We could not find your email.",
+        "resendSuccess": "We sent a new verification code to your email.",
+        "resendError": "We could not resend the verification code."
+      }
     }
   }
 }

@@ -3,6 +3,33 @@
 @import "shadcn/tailwind.css";
 @import "react-international-phone/style.css";
 
+.register-country-dropdown {
+  z-index: 80 !important;
+  max-height: min(18rem, 45vh) !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 0.75rem !important;
+  background: #171628 !important;
+  color: var(--main-text-color) !important;
+  scrollbar-width: thin;
+  scrollbar-color: #57546f #171628;
+}
+
+.register-country-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.register-country-dropdown::-webkit-scrollbar-track {
+  background: #171628;
+}
+
+.register-country-dropdown::-webkit-scrollbar-thumb {
+  border: 2px solid #171628;
+  border-radius: 999px;
+  background: #57546f;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {

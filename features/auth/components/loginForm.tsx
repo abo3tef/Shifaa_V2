@@ -1,12 +1,79 @@
-import { FiActivity, FiArrowRight, FiCalendar, FiShield } from "react-icons/fi";
+"use client";
+
+import {
+  FiActivity,
+  FiArrowRight,
+  FiCalendar,
+  FiShield,
+  FiLoader,
+} from "react-icons/fi";
 import { useTranslations } from "next-intl";
-import { Link } from "../../../i18n/navigation";
+import { useState } from "react";
+import { isAxiosError } from "axios";
+import { Link, useRouter } from "../../../i18n/navigation";
 import { Button } from "../../../components/ui/button";
 import GoogleButton from "../../../components/ui/google-button";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import { useLogin } from "../hooks/useLogin";
+import { useGoogleSignIn } from "../hooks/useGoogleSignIn";
+import { useStore } from "../store/auth.store";
+import { getDashboardPath } from "@/features/dashboard/utils/getDashboardPath";
 
 function LoginForm() {
   const t = useTranslations("Auth.Login");
+  const router = useRouter();
+  const { mutate: login, isPending } = useLogin();
+  const { mutate: googleSignIn, isPending: isGooglePending } =
+    useGoogleSignIn();
+  const setCredentials = useStore((state) => state.setCredentials);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    login(
+      { email: email.trim(), password },
+      {
+        onSuccess: (data) => {
+          setCredentials(data.user, data.accessToken, data.refreshToken);
+          router.push(getDashboardPath(data.user.role));
+        },
+        onError: (error: unknown) => {
+          const status = isAxiosError(error) ? error.response?.status : undefined;
+          toast.error(
+            status === 401
+              ? t("errors.invalidCredentials")
+              : status === 403
+                ? t("errors.accountUnavailable")
+                : t("errors.loginFailed"),
+          );
+        },
+      },
+    );
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn(undefined, {
+      onSuccess: (data) => {
+        setCredentials(data.user, data.accessToken, data.refreshToken);
+        router.push(getDashboardPath(data.user.role));
+      },
+      onError: (error) => {
+        const code =
+          typeof error === "object" && error && "code" in error
+            ? error.code
+            : undefined;
+        toast.error(
+          code === "FIREBASE_CONFIG_MISSING"
+            ? t("errors.googleNotConfigured")
+            : code === "auth/popup-closed-by-user"
+              ? t("errors.googlePopupClosed")
+              : t("errors.googleFailed"),
+        );
+      },
+    });
+  };
 
   return (
     <main className="min-h-screen bg-[var(--bg-color)] px-3 py-3 mt-20 sm:px-6 sm:py-6 lg:px-8">
@@ -76,10 +143,13 @@ function LoginForm() {
               </p>
             </div>
 
-            <form className="mt-8 space-y-4">
+            <form onSubmit={handleSubmit} className="mt-8 space-y-4">
               <Field label={t("fields.email")}>
                 <input
                   type="email"
+                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
                   placeholder={t("placeholders.email")}
                   autoComplete="email"
                 />
@@ -87,6 +157,9 @@ function LoginForm() {
               <Field label={t("fields.password")}>
                 <input
                   type="password"
+                  required
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
                   placeholder={t("placeholders.password")}
                   autoComplete="current-password"
                 />
@@ -109,11 +182,19 @@ function LoginForm() {
               </div>
 
               <Button
-                type="button"
+                type="submit"
                 variant="start"
+                disabled={isPending}
                 className="h-12 w-full text-sm"
               >
-                {t("submit")}
+                {isPending ? (
+                  <span className="inline-flex items-center gap-2">
+                    <FiLoader className="animate-spin" />
+                    {t("signingIn")}
+                  </span>
+                ) : (
+                  t("submit")
+                )}
               </Button>
 
               <div className="flex items-center gap-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--main-text-muted-color)]">
@@ -121,7 +202,13 @@ function LoginForm() {
                 {t("or")}
                 <span className="h-px flex-1 bg-[var(--border-color)]" />
               </div>
-              <GoogleButton label={t("google")} />
+              <GoogleButton
+                label={
+                  isGooglePending ? t("googleSigningIn") : t("google")
+                }
+                onClick={handleGoogleSignIn}
+                disabled={isGooglePending}
+              />
             </form>
 
             <p className="mt-5 text-center text-xs text-[var(--main-text-muted-color)]">

@@ -6,20 +6,160 @@ import {
   FiCalendar,
   FiShield,
   FiUser,
+  FiLoader,
 } from "react-icons/fi";
 import { useTranslations } from "next-intl";
 import { PhoneInput } from "react-international-phone";
-import { useState } from "react";
-import { Link } from "../../../i18n/navigation";
+import { useState, useEffect } from "react";
+import { Link, useRouter } from "../../../i18n/navigation";
 import { Button } from "../../../components/ui/button";
 import GoogleButton from "../../../components/ui/google-button";
 import Image from "next/image";
+import { isAxiosError } from "axios";
+import { useRegister } from "../hooks/useRegister";
+import { useGoogleSignIn } from "../hooks/useGoogleSignIn";
+import { useStore } from "../store/auth.store";
+import { getDashboardPath } from "@/features/dashboard/utils/getDashboardPath";
+import { getSpecializations } from "../api/auth.api";
+import type { RegisterRequest } from "../types/auth.types";
+import { toast } from "react-toastify";
+
+function getPasswordStrength(
+  pass: string,
+  labels: string[],
+): { score: number; label: string } {
+  if (!pass) return { score: 0, label: "" };
+  let score = 0;
+  if (pass.length >= 8) score++;
+  if (/[A-Z]/.test(pass) && /[a-z]/.test(pass)) score++;
+  if (/[0-9]/.test(pass)) score++;
+  if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+  return { score, label: labels[score] || labels[1] };
+}
 
 function RegisterForm() {
   const t = useTranslations("Auth.Register");
+  const router = useRouter();
+  const { mutate: registerUser, isPending } = useRegister();
+  const { mutate: googleSignIn, isPending: isGooglePending } =
+    useGoogleSignIn();
+  const setCredentials = useStore((state) => state.setCredentials);
+
   const [accountType, setAccountType] = useState<"PATIENT" | "DOCTOR">(
     "PATIENT",
   );
+  const [specializations, setSpecializations] = useState<string[]>([]);
+  const [isFetchingSpecs, setIsFetchingSpecs] = useState(false);
+
+  // Form Fields
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+
+  // Doctor Fields
+  const [specialization, setSpecialization] = useState("");
+  const [yearsOfExperience, setYearsOfExperience] = useState<number>(1);
+  const [licenseNumber, setLicenseNumber] = useState("");
+  const [bio, setBio] = useState("");
+
+  const strength = getPasswordStrength(password, [
+    t("passwordLevels.veryWeak"),
+    t("passwordLevels.weak"),
+    t("passwordLevels.medium"),
+    t("passwordLevels.strong"),
+    t("passwordLevels.veryStrong"),
+  ]);
+
+  useEffect(() => {
+    if (accountType === "DOCTOR" && specializations.length === 0) {
+      getSpecializations()
+        .then((data) => {
+          setSpecializations(data.items || []);
+          if (data.items?.length > 0) setSpecialization(data.items[0]);
+        })
+        .catch(() => toast.error(t("toasts.specializationsError")))
+        .finally(() => setIsFetchingSpecs(false));
+    }
+  }, [accountType, specializations.length, t]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const baseData = {
+      email: email.trim(),
+      password,
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      phone,
+      age: 25,
+    };
+
+    let payload: RegisterRequest;
+
+    if (accountType === "DOCTOR") {
+      if (!licenseNumber) {
+        toast.error(t("toasts.licenseRequired"));
+        return;
+      }
+      payload = {
+        ...baseData,
+        accountType: "DOCTOR",
+        doctor: {
+          specialization: specialization.toLowerCase(),
+          yearsOfExperience: Number(yearsOfExperience),
+          licenseNumber: licenseNumber.trim(),
+          bio: bio.trim() || undefined,
+        },
+      };
+    } else {
+      payload = {
+        ...baseData,
+        accountType: "PATIENT",
+      };
+    }
+
+    registerUser(payload, {
+      onSuccess: () => {
+        toast.success(t("toasts.registerSuccess"));
+        sessionStorage.setItem("pending_verify_email", email);
+        router.push("/verify-email");
+      },
+      onError: (err: unknown) => {
+        const msg = isAxiosError<{ message?: string | string[] }>(err)
+          ? err.response?.data?.message
+          : undefined;
+        const message = Array.isArray(msg)
+          ? msg.join(", ")
+          : msg || t("toasts.registerError");
+        toast.error(message);
+      },
+    });
+  };
+
+  const handleGoogleSignIn = () => {
+    googleSignIn(undefined, {
+      onSuccess: (data) => {
+        setCredentials(data.user, data.accessToken, data.refreshToken);
+        router.push(getDashboardPath(data.user.role));
+      },
+      onError: (error) => {
+        const code =
+          typeof error === "object" && error && "code" in error
+            ? error.code
+            : undefined;
+        toast.error(
+          code === "FIREBASE_CONFIG_MISSING"
+            ? t("toasts.googleNotConfigured")
+            : code === "auth/popup-closed-by-user"
+              ? t("toasts.googlePopupClosed")
+              : t("toasts.googleError"),
+        );
+      },
+    });
+  };
 
   return (
     <main className="min-h-screen bg-[var(--bg-color)] px-3 py-3 mt-20 sm:px-6 sm:py-6 lg:px-8">
@@ -89,7 +229,7 @@ function RegisterForm() {
               </p>
             </div>
 
-            <form className="mt-8 space-y-4">
+            <form onSubmit={handleSubmit} className="mt-8 space-y-4">
               <div className="space-y-2">
                 <span className="block text-sm font-semibold text-[var(--main-text-color)]">
                   {t("accountType.label")}
@@ -108,7 +248,12 @@ function RegisterForm() {
                     type="button"
                     variant={accountType === "DOCTOR" ? "start" : "outline"}
                     className={`h-12 rounded-2xl text-sm ${accountType === "DOCTOR" ? "!text-white" : "!text-black"}`}
-                    onClick={() => setAccountType("DOCTOR")}
+                    onClick={() => {
+                      setAccountType("DOCTOR");
+                      if (specializations.length === 0) {
+                        setIsFetchingSpecs(true);
+                      }
+                    }}
                   >
                     <FiActivity size={17} />
                     {t("accountType.doctor")}
@@ -120,6 +265,9 @@ function RegisterForm() {
                 <Field label={t("fields.firstName")}>
                   <input
                     type="text"
+                    required
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                     placeholder={t("placeholders.firstName")}
                     autoComplete="given-name"
                   />
@@ -127,6 +275,9 @@ function RegisterForm() {
                 <Field label={t("fields.lastName")}>
                   <input
                     type="text"
+                    required
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                     placeholder={t("placeholders.lastName")}
                     autoComplete="family-name"
                   />
@@ -136,6 +287,9 @@ function RegisterForm() {
               <Field label={t("fields.email")}>
                 <input
                   type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder={t("placeholders.email")}
                   autoComplete="email"
                 />
@@ -144,32 +298,27 @@ function RegisterForm() {
               <Field label={t("fields.phone")}>
                 <PhoneInput
                   defaultCountry="eg"
-                  inputProps={{
-                    autoComplete: "tel",
-                    dir: "ltr",
-                    placeholder: t("placeholders.phone"),
-                  }}
-                  inputClassName="!h-12 !w-full !border-0 !bg-transparent !px-3 !text-sm !text-[var(--main-text-color)] !outline-none"
+                  value={phone}
+                  onChange={(phoneVal) => setPhone(phoneVal)}
                   countrySelectorStyleProps={{
                     buttonClassName:
                       "!h-12 !border-0 !border-e !border-[var(--border-color)] !bg-transparent !px-3",
                     dropdownStyleProps: {
-                      style: {
-                        backgroundColor: "var(--cart-item-background)",
-                        border: "1px solid var(--border-color)",
-                        color: "var(--main-text-color)",
-                        zIndex: 80,
-                      },
-                      className:
-                        "!z-[80] !max-h-64 !overflow-y-auto !rounded-xl !shadow-[0_16px_40px_rgba(0,0,0,0.35)]",
+                      className: "register-country-dropdown",
                       listItemClassName:
-                        "!text-[var(--main-text-color)] hover:!bg-[var(--success)]/15",
+                        "!px-3 !py-2.5 !text-sm !text-[var(--main-text-color)] hover:!bg-[var(--success)]/15",
                       listItemSelectedClassName:
                         "!bg-[var(--success)]/20 !text-[var(--success-light)]",
                       listItemFocusedClassName:
                         "!bg-[var(--success)]/15 !text-[var(--success-light)]",
                     },
                   }}
+                  inputProps={{
+                    autoComplete: "tel",
+                    dir: "ltr",
+                    placeholder: t("placeholders.phone"),
+                  }}
+                  inputClassName="!h-12 !w-full !border-0 !bg-transparent !px-3 !text-sm !text-[var(--main-text-color)] !outline-none"
                   className="!h-12 !w-full !rounded-2xl !border !border-[var(--border-color)] !bg-[var(--cart-item-background)] !shadow-none"
                 />
               </Field>
@@ -177,87 +326,115 @@ function RegisterForm() {
               <Field label={t("fields.password")}>
                 <input
                   type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder={t("placeholders.password")}
                   autoComplete="new-password"
                 />
               </Field>
 
+              {/* شريط صعوبة كلمة المرور */}
+              {password && (
+                <div className="space-y-1.5">
+                  <div className="flex items-center justify-between text-[11px]">
+                    <span className="text-[var(--main-text-muted-color)]">
+                      {t("passwordStrength")}:
+                    </span>
+                    <span className="font-semibold text-[var(--success-light)]">
+                      {strength.label}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-1.5">
+                    {[1, 2, 3, 4].map((step) => (
+                      <span
+                        key={step}
+                        className={`h-1.5 rounded-full transition-colors ${
+                          strength.score >= step
+                            ? "bg-[var(--success)]"
+                            : "bg-[var(--border-color)]"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {accountType === "DOCTOR" && (
-                <div className="space-y-4 rounded-2xl p-4">
+                <div className="space-y-4 rounded-2xl p-4 border border-[var(--border-color)] bg-[var(--cart-item-background)]/50">
                   <div className="grid gap-4 sm:grid-cols-2">
                     <Field label={t("doctorDetails.specialization")}>
-                      <input
-                        type="text"
-                        placeholder={t(
-                          "doctorDetails.specializationPlaceholder",
-                        )}
-                      />
+                      {isFetchingSpecs ? (
+                        <div className="flex h-12 items-center px-4 text-xs text-gray-400">
+                          {t("doctorDetails.loadingSpecializations")}
+                        </div>
+                      ) : (
+                        <select
+                          value={specialization}
+                          onChange={(e) => setSpecialization(e.target.value)}
+                          className="h-12 w-full bg-transparent px-4 text-sm outline-none text-[var(--main-text-color)]"
+                        >
+                          {specializations.map((spec) => (
+                            <option
+                              key={spec}
+                              value={spec}
+                              className="bg-[#11101d] text-white"
+                            >
+                              {spec.toUpperCase()}
+                            </option>
+                          ))}
+                        </select>
+                      )}
                     </Field>
                     <Field label={t("doctorDetails.yearsOfExperience")}>
-                      <input type="number" min="0" placeholder="8" />
+                      <input
+                        type="number"
+                        min="0"
+                        required
+                        value={yearsOfExperience}
+                        onChange={(e) =>
+                          setYearsOfExperience(Number(e.target.value))
+                        }
+                      />
                     </Field>
                   </div>
-                  {/* <Field label={t("doctorDetails.licenseNumber")}>
-                    <input type="text" placeholder="EG-MED-123456" />
+
+                  <Field label={t("doctorDetails.licenseNumber")}>
+                    <input
+                      type="text"
+                      required
+                      placeholder={t("doctorDetails.licensePlaceholder")}
+                      value={licenseNumber}
+                      onChange={(e) => setLicenseNumber(e.target.value)}
+                    />
                   </Field>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <Field label={t("doctorDetails.hospitalId")}>
-                      <input type="number" min="1" placeholder="1" />
-                    </Field>
-                    <Field label={t("doctorDetails.departmentId")}>
-                      <input type="number" min="1" placeholder="2" />
-                    </Field>
-                  </div> */}
+
                   <label className="block text-sm font-semibold text-[var(--main-text-color)]">
                     <span>{t("doctorDetails.bio")}</span>
                     <textarea
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
                       placeholder={t("doctorDetails.bioPlaceholder")}
-                      className="mt-2 min-h-24 w-full resize-y rounded-2xl border border-[var(--border-color)] bg-[var(--cart-item-background)] px-4 py-3 text-sm font-normal text-[var(--main-text-color)] outline-none placeholder:text-[var(--main-text-muted-color)] focus:border-[var(--success)]"
+                      className="mt-2 min-h-20 w-full resize-y rounded-2xl border border-[var(--border-color)] bg-[var(--cart-item-background)] px-4 py-3 text-sm text-[var(--main-text-color)] outline-none focus:border-[var(--success)]"
                     />
                   </label>
                 </div>
               )}
 
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-[11px] text-[var(--main-text-muted-color)]">
-                  <span>{t("passwordStrength")}</span>
-                  <span className="font-semibold text-[var(--success-light)]">
-                    {t("passwordHint")}
-                  </span>
-                </div>
-                <div
-                  className="grid grid-cols-4 gap-1.5"
-                  aria-label={t("passwordStrength")}
-                >
-                  <span className="h-1.5 rounded-full bg-[var(--success)]" />
-                  <span className="h-1.5 rounded-full bg-[var(--success)]/45" />
-                  <span className="h-1.5 rounded-full bg-[var(--border-color)]" />
-                  <span className="h-1.5 rounded-full bg-[var(--border-color)]" />
-                </div>
-              </div>
-
-              <label className="flex items-start gap-3 pt-1 text-xs leading-5 text-[var(--main-text-muted-color)]">
-                <input
-                  type="checkbox"
-                  className="mt-1 size-4 accent-[var(--success)]"
-                />
-                <span>
-                  {t("termsPrefix")}{" "}
-                  <a
-                    href="#terms"
-                    className="font-bold text-[var(--success-light)] hover:underline"
-                  >
-                    {t("terms")}
-                  </a>
-                </span>
-              </label>
-
               <Button
-                type="button"
+                type="submit"
                 variant="start"
-                className="h-12 w-full text-sm"
+                disabled={isPending}
+                className="h-12 w-full text-sm disabled:bg-gray-500 flex items-center justify-center gap-2"
               >
-                {t("submit")}
+                {isPending ? (
+                  <>
+                    <FiLoader className="animate-spin size-5" />
+                    <span>{t("creatingAccount")}</span>
+                  </>
+                ) : (
+                  t("submit")
+                )}
               </Button>
 
               <div className="flex items-center gap-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--main-text-muted-color)]">
@@ -265,7 +442,15 @@ function RegisterForm() {
                 {t("or")}
                 <span className="h-px flex-1 bg-[var(--border-color)]" />
               </div>
-              <GoogleButton label={t("google")} />
+              <GoogleButton
+                label={
+                  isGooglePending
+                    ? t("googleSigningIn")
+                    : t("google")
+                }
+                onClick={handleGoogleSignIn}
+                disabled={isGooglePending}
+              />
             </form>
 
             <p className="mt-5 text-center text-xs text-[var(--main-text-muted-color)]">
@@ -294,7 +479,7 @@ function Field({
   return (
     <label className="block text-sm font-semibold text-[var(--main-text-color)]">
       <span>{label}</span>
-      <div className="mt-2 overflow-visible rounded-2xl border border-[var(--border-color)] bg-[var(--cart-item-background)] transition-colors focus-within:border-[var(--success)] focus-within:shadow-[0_0_0_3px_rgba(15,169,104,0.1)] [&>input]:h-12 [&>input]:w-full [&>input]:border-0 [&>input]:bg-transparent [&>input]:px-4 [&>input]:text-sm [&>input]:text-[var(--main-text-color)] [&>input]:outline-none [&>input]:placeholder:text-[var(--main-text-muted-color)]">
+      <div className="mt-2 overflow-visible rounded-2xl border border-[var(--border-color)] bg-[var(--cart-item-background)] transition-colors focus-within:border-[var(--success)] [&>input]:h-12 [&>input]:w-full [&>input]:border-0 [&>input]:bg-transparent [&>input]:px-4 [&>input]:text-sm [&>input]:text-[var(--main-text-color)] [&>input]:outline-none">
         {children}
       </div>
     </label>

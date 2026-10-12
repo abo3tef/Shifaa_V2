@@ -34,6 +34,29 @@ export type VerifyEmailRequest = {
   code: string;
 };
 
+export type LoginRequest = {
+  email: string;
+  password: string;
+};
+
+export type SocialAuthRequest = {
+  idToken: string;
+};
+
+export type ForgotPasswordRequest = {
+  email: string;
+};
+
+export type ResetPasswordRequest = {
+  email: string;
+  code: string;
+  newPassword: string;
+};
+
+export type RefreshTokenRequest = {
+  refreshToken: string;
+};
+
 export type ApiMessageResponse = {
   message: string;
 };
@@ -62,6 +85,12 @@ export type AuthTokens = {
 };
 
 export type VerifyEmailResponse = {
+  user: AuthUser;
+  accessToken: string;
+  refreshToken: string;
+};
+
+export type AuthResponse = {
   user: AuthUser;
   accessToken: string;
   refreshToken: string;
