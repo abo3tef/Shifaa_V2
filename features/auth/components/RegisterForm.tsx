@@ -146,6 +146,8 @@ function RegisterForm() {
         router.push(getDashboardPath(data.user.role));
       },
       onError: (error) => {
+        const serverUnavailable =
+          isAxiosError(error) && error.response?.status === 503;
         const code =
           typeof error === "object" && error && "code" in error
             ? error.code
@@ -155,6 +157,8 @@ function RegisterForm() {
             ? t("toasts.googleNotConfigured")
             : code === "auth/popup-closed-by-user"
               ? t("toasts.googlePopupClosed")
+              : serverUnavailable
+                ? t("toasts.googleServerUnavailable")
               : t("toasts.googleError"),
         );
       },

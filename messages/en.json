@@ -333,6 +333,7 @@
         "registerError": "We could not create your account. Please try again.",
         "googleNotConfigured": "Google sign-in is not configured yet.",
         "googlePopupClosed": "The Google sign-in window was closed before finishing.",
+        "googleServerUnavailable": "Google sign-in is not configured on the server. Please contact the administrator.",
         "googleError": "Google sign-in failed. Please try again."
       }
     },
@@ -362,6 +363,7 @@
         "loginFailed": "We could not sign you in. Please try again.",
         "googleNotConfigured": "Google sign-in is not configured yet.",
         "googlePopupClosed": "The Google sign-in window was closed before finishing.",
+        "googleServerUnavailable": "Google sign-in is not configured on the server. Please contact the administrator.",
         "googleFailed": "Google sign-in failed. Please try again."
       },
       "noAccount": "Don't have an account?",

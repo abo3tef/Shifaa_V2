@@ -60,6 +60,8 @@ function LoginForm() {
         router.push(getDashboardPath(data.user.role));
       },
       onError: (error) => {
+        const serverUnavailable =
+          isAxiosError(error) && error.response?.status === 503;
         const code =
           typeof error === "object" && error && "code" in error
             ? error.code
@@ -69,6 +71,8 @@ function LoginForm() {
             ? t("errors.googleNotConfigured")
             : code === "auth/popup-closed-by-user"
               ? t("errors.googlePopupClosed")
+              : serverUnavailable
+                ? t("errors.googleServerUnavailable")
               : t("errors.googleFailed"),
         );
       },

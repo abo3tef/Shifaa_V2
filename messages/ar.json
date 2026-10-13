@@ -333,6 +333,7 @@
         "registerError": "حدث خطأ أثناء إنشاء الحساب. يرجى المحاولة مرة أخرى.",
         "googleNotConfigured": "تسجيل الدخول بواسطة Google غير مُعدّ بعد.",
         "googlePopupClosed": "أُغلقت نافذة Google قبل اكتمال تسجيل الدخول.",
+        "googleServerUnavailable": "تسجيل الدخول بواسطة Google غير مُعدّ على الخادم. تواصل مع مسؤول النظام.",
         "googleError": "تعذر تسجيل الدخول بواسطة Google. حاول مرة أخرى."
       }
     },
@@ -362,6 +363,7 @@
         "loginFailed": "تعذر تسجيل الدخول. حاول مرة أخرى.",
         "googleNotConfigured": "تسجيل الدخول بواسطة Google غير مُعدّ بعد.",
         "googlePopupClosed": "أُغلقت نافذة Google قبل اكتمال تسجيل الدخول.",
+        "googleServerUnavailable": "تسجيل الدخول بواسطة Google غير مُعدّ على الخادم. تواصل مع مسؤول النظام.",
         "googleFailed": "تعذر تسجيل الدخول بواسطة Google. حاول مرة أخرى."
       },
       "noAccount": "ليس لديك حساب؟",
