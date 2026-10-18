@@ -10,10 +10,14 @@ export function SiteChrome() {
 
   if (isDashboard) return null;
 
-  return (
-    <>
-      <Navbar />
-      <Footer />
-    </>
-  );
+  return <Navbar />;
+}
+
+export function SiteFooter() {
+  const pathname = usePathname();
+  const isDashboard = /\/(patient|doctor)\/dashboard\/?$/.test(pathname);
+
+  if (isDashboard) return null;
+
+  return <Footer />;
 }

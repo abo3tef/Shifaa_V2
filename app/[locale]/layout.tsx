@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Cairo } from "next/font/google";
-import { SiteChrome } from "@/components/layout/site-chrome";
+import { SiteChrome, SiteFooter } from "@/components/layout/site-chrome";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import "lenis/dist/lenis.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -117,6 +117,7 @@ export default async function RootLayout({
           <main className="flex-1">
             <Providers>{children}</Providers>
           </main>
+          <SiteFooter />
         </NextIntlClientProvider>
       </body>
     </html>
